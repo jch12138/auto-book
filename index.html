@@ -1,0 +1,176 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>自定义select</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #main {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    #content {
+      width: 100%;
+      height: 10%;
+      /* line-height: 42px; */
+      /* padding-left: 10px; */
+      background: rgb(255, 255, 255);
+      /* border-radius: 2px; */
+      /* border: 1px solid rgb(221, 221, 221); */
+      font-size: 50px;
+      font-family: MicrosoftYaHei;
+      color: rgb(51, 51, 51);
+      cursor: pointer;
+      text-align: center;
+    }
+    #selectImg {
+      position: absolute;
+      top: 13px;
+      right: 10px;
+      cursor: pointer;
+    }
+    #selectItem {
+      display: none;
+      border: 1px solid #eee;
+      width: 100%;
+      height: 10%;
+    }
+    #selectItem ul {
+      list-style: none;
+      height: 10%;
+    }
+    #selectItem ul li {
+      height: 100px;
+      /* line-height: 10%; */
+      /* padding-left: 10px; */
+      cursor: pointer;
+      text-align: center;
+      font-size: 50px;
+    }
+    #selectItem ul li:hover {
+      background-color: #f5f7fa;
+    }
+    #submit {
+      width: 100%;
+      height: 10%;
+      text-align: center;
+      font-size: 50px;
+    }
+  </style>
+  <body>
+    <div id="main">
+      <div id="content" value="0"></div>
+      <img id="selectImg" src="./icon_select.png" alt="" />
+      <div id="selectItem">
+        <!--  <ul>
+        <li data-value="1">北京</li>
+        <li data-value="2">上海</li>
+        <li data-value="3">深圳</li>
+      </ul>-->
+      </div>
+      <button id="submit" onclick="submit()">确定</button>
+    </div>
+  </body>
+  <script>
+    var data = [
+      { name: "b106", value: "1" },
+      { name: "b108", value: "2" },
+    ];
+    var content = document.getElementById("content");
+    var selectImg = document.getElementById("selectImg");
+    var selectItem = document.getElementById("selectItem");
+
+    var ul = document.createElement("ul");
+    selectItem.appendChild(ul);
+    for (var i = 0; i < data.length; i++) {
+      var li = document.createElement("li");
+      li.setAttribute("data-value", data[i].value);
+      li.innerText = data[i].name;
+      ul.appendChild(li);
+    }
+
+    function submit() {
+      value = content.getAttribute("value");
+      if (value == "1") {
+        //   alert("b106");
+        var xhr = new XMLHttpRequest(); //第一步：新建对象
+        xhr.open("GET", "http://127.0.0.1:4321/set_seat?value=1", true); //第二步：打开连接  将请求参数写在url中
+        xhr.send(); //第三步：发送请求  将请求参数写在URL中
+        /**
+         * 获取数据后的处理程序
+         */
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            var res = xhr.responseText; //获取到json字符串，解析
+            res = JSON.parse(res);
+            if(res['status'] == true){
+                alert('success');
+            }else{
+                alert('false');
+            }
+            console.log(res);
+          }
+        };
+      } else if (value == "2") {
+        var xhr = new XMLHttpRequest(); //第一步：新建对象
+        xhr.open("GET", "http://127.0.0.1:4321/set_seat?value=2", true); //第二步：打开连接  将请求参数写在url中
+        xhr.send(); //第三步：发送请求  将请求参数写在URL中
+        /**
+         * 获取数据后的处理程序
+         */
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            var res = xhr.responseText; //获取到json字符串，解析
+            res = JSON.parse(res);
+            if(res['status'] == true){
+                alert('success');
+            }else{
+                alert('false');
+            }
+            console.log(res);
+          }
+        };
+      }
+    }
+    /**
+     * 点击下拉箭头
+     */
+    selectImg.onclick = function () {
+      console.log(selectItem.style.display);
+      if (
+        selectItem.style.display == "none" ||
+        selectItem.style.display == ""
+      ) {
+        selectItem.style.display = "block";
+      } else {
+        selectItem.style.display = "none";
+      }
+    };
+
+    content.onclick = function () {
+      if (
+        selectItem.style.display == "none" ||
+        selectItem.style.display == ""
+      ) {
+        selectItem.style.display = "block";
+      } else {
+        selectItem.style.display = "none";
+      }
+    };
+
+    var lis = selectItem.getElementsByTagName("li");
+    for (var i = 0; i < lis.length; i++) {
+      lis[i].onclick = function () {
+        console.log(this.innerHTML, this.getAttribute("data-value"));
+        content.innerText = this.innerHTML;
+        content.setAttribute("value", this.getAttribute("data-value"));
+        selectItem.style.display = "none";
+      };
+    }
+  </script>
+</html>

@@ -1,0 +1,32 @@
+record:
+  -
+    account: '17857687977'
+    password: 'yxsdmv331'
+    roomId: '4521'
+    seatNum: '010'
+    startTime: '6:30'
+    endTime: '23:30'
+
+  -
+    account: '18069122644'
+    password: 'jch12138'
+    roomId: '4521'
+    seatNum: '020'
+    startTime: '6:30'
+    endTime: '23:30'
+
+  # -
+  #   account: '17857696213'
+  #   password: 'xyf990919'
+  #   roomId: '4521'
+  #   seatNum: '020'
+  #   startTime: '6:30'
+  #   endTime: '23:30' 
+   
+  # -
+  #   account: '18042363226'
+  #   password: hz123456
+  #   roomId: '4521'
+  #   seatNum: '010'
+  #   startTime: '6:30'
+  #   endTime: '23:30'
